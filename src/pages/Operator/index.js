@@ -1,64 +1,74 @@
 import React, { useState, useEffect } from "react";
-import './style.css';
+import "./style.css";
 
 function Operator() {
-  const [lançar, setLançar] = useState('');
+  const [lançar, setLançar] = useState("");
   const [saveValue, setSaveValue] = useState([]);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isEditing, setIsEditing] = useState(null);
+  const [editValue, setEditValue] = useState("");
 
   // Carregar dados do localStorage ao montar o componente
   useEffect(() => {
-    const savedData = JSON.parse(localStorage.getItem('cliente')) || [];
+    const savedData = JSON.parse(localStorage.getItem("cliente")) || [];
     setSaveValue(savedData);
-
-    // Verificar se a exclusão está desabilitada
-    const disableState = localStorage.getItem('disableRemove') === 'true';
-    setIsDisabled(disableState);
-  }, []);
-
-  // Monitorar mudanças no estado de exclusão desabilitada
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const disableState = localStorage.getItem('disableRemove') === 'true';
-      setIsDisabled(disableState);
-    }, 500); // Verificar a cada 500ms
-
-    return () => clearInterval(interval);
   }, []);
 
   // Adicionar novo cliente ao estado e localStorage
   const handleLocalStorage = () => {
-    if (lançar.trim() !== '') {
-      const newEntry = { id: Date.now(), name: lançar }; // Criar um objeto único para cada entrada
+    if (lançar.trim() !== "") {
+      const newEntry = { id: Date.now(), name: lançar };
       const newValue = [...saveValue, newEntry];
       setSaveValue(newValue);
-      localStorage.setItem('cliente', JSON.stringify(newValue));
-      setLançar('');
+      localStorage.setItem("cliente", JSON.stringify(newValue));
+      setLançar("");
     }
   };
 
   const handleEnter = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleLocalStorage();
     }
   };
 
-  // Remover cliente e salvar o nome removido no localStorage
-  const handleRemove = (id, name) => {
-    if (!isDisabled) {
-      const updatedValue = saveValue.filter((item) => item.id !== id); // Remover pelo ID
-      setSaveValue(updatedValue);
-      localStorage.setItem('cliente', JSON.stringify(updatedValue));
+  // Remover cliente (botão "OK!")
+  const handleRemove = (id) => {
+    const updatedValue = saveValue.filter((item) => item.id !== id);
+    setSaveValue(updatedValue);
+    localStorage.setItem("cliente", JSON.stringify(updatedValue));
 
-      // Salvar o nome removido para a página View
-      localStorage.setItem('removedName', name);
-
-      // Definir indicador de animação
-      localStorage.setItem('triggerAnimation', 'true');
-
-      // Desabilitar exclusão
-      localStorage.setItem('disableRemove', 'true');
+    const removedClient = saveValue.find((item) => item.id === id);
+    if (removedClient) {
+      localStorage.setItem("removedName", removedClient.name);
+      localStorage.setItem("triggerAnimation", "true");
     }
+  };
+
+  // Exclusão completa do cliente
+  const handleDelete = (id) => {
+    const updatedValue = saveValue.filter((item) => item.id !== id);
+    setSaveValue(updatedValue);
+    localStorage.setItem("cliente", JSON.stringify(updatedValue));
+  };
+
+  // Iniciar a edição do nome
+  const handleEdit = (id, currentName) => {
+    setIsEditing(id);
+    setEditValue(currentName);
+  };
+
+  // Salvar a edição do nome
+  const handleSaveEdit = (id) => {
+    const updatedValue = saveValue.map((item) => {
+      if (item.id === id) {
+        return { ...item, name: editValue };
+      }
+      return item;
+    });
+
+    setSaveValue(updatedValue);
+    localStorage.setItem("cliente", JSON.stringify(updatedValue));
+    setIsEditing(null);
+    setEditValue("");
   };
 
   return (
@@ -83,13 +93,33 @@ function Operator() {
             <ul className="prepalist">
               {saveValue.map((cliente) => (
                 <li className="lista" key={cliente.id}>
-                  {cliente.name}
-                  <button
-                    onClick={() => handleRemove(cliente.id, cliente.name)}
-                    disabled={isDisabled} // Desabilitar botão durante animação
-                  >
-                    OK!
-                  </button>
+                  {isEditing === cliente.id ? (
+                    <>
+                      <input
+                        value={editValue}
+                        onChange={(e) => setEditValue(e.target.value)}
+                      />
+                      <button onClick={() => handleSaveEdit(cliente.id)}>
+                        Salvar
+                      </button>
+                      <button onClick={() => setIsEditing(null)}>Cancelar</button>
+                    </>
+                  ) : (
+                    <>
+                      {cliente.name}
+                      <button
+                        onClick={() => handleRemove(cliente.id)}
+                      >
+                        OK!
+                      </button>
+                      <button onClick={() => handleEdit(cliente.id, cliente.name)}>
+                        Editar
+                      </button>
+                      <button onClick={() => handleDelete(cliente.id)}>
+                        Excluir
+                      </button>
+                    </>
+                  )}
                 </li>
               ))}
             </ul>
