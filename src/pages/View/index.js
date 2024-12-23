@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import logo from "./logo.png";
 import "./App.css";
 import img_1 from "./img_1.png";
-import img_2 from "./img_2.png";
+import img_2 from "./img_3.png";
 import img_3 from "./img_3.png";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -10,9 +10,10 @@ import "slick-carousel/slick/slick-theme.css";
 
 function View() {
   const [saveValue, setSaveValue] = useState([]);
-  const [removedName, setRemovedName] = useState("");
+  const [removedName, setRemovedName] = useState(""); // Último nome removido
   const [showAnimation, setShowAnimation] = useState(false);
   const [timerWidth, setTimerWidth] = useState(100);
+  const [recentNames, setRecentNames] = useState([]); // Para armazenar os últimos 5 nomes chamados
 
   const settings = {
     dots: true,
@@ -32,7 +33,13 @@ function View() {
 
       const removedData = localStorage.getItem("removedName");
       if (removedData) {
-        setRemovedName(removedData); // Atualiza o nome exibido
+        setRemovedName(removedData); // Atualiza o nome removido
+
+        // Atualiza a lista de 5 nomes, garantindo que o nome mais recente não se repita
+        setRecentNames((prevNames) => {
+          const updatedNames = [removedData, ...prevNames.filter(name => name !== removedData)].slice(0, 5);
+          return updatedNames;
+        });
       }
 
       const trigger = localStorage.getItem("triggerAnimation");
@@ -79,22 +86,33 @@ function View() {
       </div>
 
       <div className="container_2">
-        <div className="section_2">
-          <h1 className="prepapedido">PREPARANDO PEDIDO</h1>
-          <div className="lista-container">
-            <ul className="lista-coluna">
-              {saveValue.slice(0, 10).map((cliente, index) => (
-                <li key={index}>{cliente.name}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
+  <div className="section_2">
+    <h1 className="prepapedido">PREPARANDO PEDIDO</h1>
+    <div className="lista-container">
+      <ul className="lista-coluna">
+        {saveValue.slice(0, 10).map((cliente, index) => (
+          <li key={index}>{cliente.name}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</div>
+
+
 
       <div className="container_1">
         <div className="section_1">
-          <h1>SEU PEDIDO ESTÁ PRONTO</h1>
-          <h1 className="nome">{removedName ? removedName : ""}</h1>
+          <h1 className="titleText">SEU PEDIDO ESTÁ PRONTO</h1>
+          {/* Lista dos últimos 5 nomes chamados */}
+          <ul className="nome">
+      {recentNames.length === 0 ? (
+        <li>Sem nomes</li>  // Caso não haja nomes, exibe uma mensagem
+      ) : (
+        recentNames.map((name, index) => (
+          <li key={index}>{name}</li>
+        ))
+      )}
+          </ul>
         </div>
       </div>
 
