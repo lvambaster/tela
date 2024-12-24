@@ -45,7 +45,7 @@ body {
   /* Organiza o título e a lista verticalmente */
   background-color: #f8f9fa;
   /* Fundo da seção */
-  padding: 8px;
+  padding: 4px;
   /* Espaçamento interno */
   border-radius: 5px;
   /* Cantos arredondados */
@@ -74,8 +74,12 @@ body {
 }
 
 .lista-container {
-  overflow-y: auto;
-  /* Adiciona rolagem se necessário */
+  overflow-y: auto;/* Adiciona rolagem se necessário */
+
+  margin: 0 auto; /* Centraliza o container */
+  max-width: 90%; /* Define uma largura máxima */
+  padding: 5px; /* Ajuste adicional no container */
+  
 }
 
 .lista-coluna {
@@ -94,9 +98,8 @@ body {
 
 .lista-coluna li {
   text-align: center;
-  font-weight: bold;
-  margin-bottom: 8px;
-  font-size: 30px;
+  font-weight: bold;  
+  font-size: 22px;
 }
 
 .prepapedido {
