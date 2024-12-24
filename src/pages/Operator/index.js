@@ -6,6 +6,7 @@ function Operator() {
   const [saveValue, setSaveValue] = useState([]);
   const [isEditing, setIsEditing] = useState(null);
   const [editValue, setEditValue] = useState("");
+  const [isTimerActive, setIsTimerActive] = useState(false); // Estado do temporizador
 
   // Carregar dados do localStorage ao montar o componente
   useEffect(() => {
@@ -30,8 +31,19 @@ function Operator() {
     }
   };
 
+  // Função para iniciar o temporizador
+  const startTimer = () => {
+    setIsTimerActive(true);
+    setTimeout(() => {
+      setIsTimerActive(false);
+    }, 5000); // O temporizador vai rodar por 5 segundos
+  };
+
   // Remover cliente (botão "OK!")
   const handleRemove = (id) => {
+    if (isTimerActive) {
+      return; // Não faz nada se o temporizador estiver ativo
+    }
     const updatedValue = saveValue.filter((item) => item.id !== id);
     setSaveValue(updatedValue);
     localStorage.setItem("cliente", JSON.stringify(updatedValue));
@@ -41,6 +53,8 @@ function Operator() {
       localStorage.setItem("removedName", removedClient.name);
       localStorage.setItem("triggerAnimation", "true");
     }
+
+    startTimer(); // Inicia o temporizador após a remoção
   };
 
   // Exclusão completa do cliente
@@ -99,23 +113,39 @@ function Operator() {
                         value={editValue}
                         onChange={(e) => setEditValue(e.target.value)}
                       />
-                      <button onClick={() => handleSaveEdit(cliente.id)}>
+                      <button
+                        className="save-btn"
+                        onClick={() => handleSaveEdit(cliente.id)}
+                      >
                         Salvar
                       </button>
-                      <button onClick={() => setIsEditing(null)}>Cancelar</button>
+                      <button
+                        className="cancel-btn"
+                        onClick={() => setIsEditing(null)}
+                      >
+                        Cancelar
+                      </button>
                     </>
                   ) : (
                     <>
                       {cliente.name}
                       <button
+                        className={`ok-btn ${isTimerActive ? "disabled" : ""}`} // Aplique a classe condicional corretamente
                         onClick={() => handleRemove(cliente.id)}
+                        disabled={isTimerActive} // Desabilita o botão enquanto o temporizador está ativo
                       >
                         OK!
                       </button>
-                      <button onClick={() => handleEdit(cliente.id, cliente.name)}>
+                      <button
+                        className="edit-btn"
+                        onClick={() => handleEdit(cliente.id, cliente.name)}
+                      >
                         Editar
                       </button>
-                      <button onClick={() => handleDelete(cliente.id)}>
+                      <button
+                        className="delete-btn"
+                        onClick={() => handleDelete(cliente.id)}
+                      >
                         Excluir
                       </button>
                     </>

@@ -81,7 +81,8 @@
   padding: 20px;
   border-radius: 10px;
   width: 100%;
-  box-sizing: border-box; /* Garante que padding não expanda o elemento */
+  box-sizing: border-box;
+  /* Garante que padding não expanda o elemento */
 }
 
 .lisoperator h1 {
@@ -94,12 +95,15 @@
 /* Ajusta os cards em duas colunas */
 .prepalist {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Divisão automática em colunas */
-  gap: 20px; /* Espaçamento entre os cards */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* Divisão automática em colunas */
+  gap: 20px;
+  /* Espaçamento entre os cards */
   padding: 0;
   margin: 0 auto;
   width: 100%;
-  max-width: 800px; /* Limita a largura total */
+  max-width: 800px;
+  /* Limita a largura total */
 }
 
 /* Estilo para cada card */
@@ -108,14 +112,18 @@
   justify-content: space-between;
   align-items: center;
   background-color: #ecf0f1;
-  padding: 15px; /* Espaçamento interno */
-  margin: 0; /* Remove o margin vertical (usamos gap no grid) */
+  padding: 15px;
+  /* Espaçamento interno */
+  margin: 0;
+  /* Remove o margin vertical (usamos gap no grid) */
   border-radius: 5px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   font-size: 16px;
   color: #2c3e50;
-  text-align: left; /* Garante que o texto fique alinhado à esquerda */
-  word-wrap: break-word; /* Quebra texto longo */
+  text-align: left;
+  /* Garante que o texto fique alinhado à esquerda */
+  word-wrap: break-word;
+  /* Quebra texto longo */
 }
 
 /* Botões dentro de cada card */
@@ -127,7 +135,8 @@
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-left: 5px; /* Espaçamento entre os botões */
+  margin-left: 5px;
+  /* Espaçamento entre os botões */
 }
 
 .lista .ok-btn {
@@ -160,7 +169,8 @@
 /* Responsividade */
 @media (max-width: 768px) {
   .prepalist {
-    grid-template-columns: 1fr; /* Volta para uma única coluna em telas menores */
+    grid-template-columns: 1fr;
+    /* Volta para uma única coluna em telas menores */
   }
 
   .painelcontainer {
@@ -178,11 +188,110 @@
 
   .lista {
     font-size: 14px;
-    padding: 10px; /* Reduz o padding em telas menores */
+    padding: 10px;
+    /* Reduz o padding em telas menores */
   }
 
   .lista button {
     padding: 6px 10px;
     font-size: 12px;
   }
+}
+
+
+
+
+/*--------------------------------------------------------*/
+
+
+
+
+
+
+/* Botões gerais */
+.lista button {
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 8px;
+  /* Define uma leve margem entre botões */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.lista button:focus {
+  outline: 2px solid rgba(52, 152, 219, 0.6);
+  outline-offset: 2px;
+}
+
+.lista button:hover {
+  transform: translateY(-2px);
+  /* Efeito de "flutuar" ao passar o mouse */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Botão "OK!" */
+.ok-btn {
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+}
+
+.ok-btn.disabled {
+  background-color: #d6d6d6; /* Cor mais clara para indicar desabilitado */
+  cursor: not-allowed; /* Indicativo de que o botão não pode ser clicado */
+  opacity: 0.6; /* Efeito de esmaecimento */
+}
+
+.ok-btn:disabled {
+  background-color: #d6d6d6;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+
+
+/* Botão "Editar" */
+.lista .edit-btn {
+  background-color: #3498db;
+  color: #ffffff;
+}
+
+.lista .edit-btn:hover {
+  background-color: #2980b9;
+}
+
+/* Botão "Excluir" */
+.lista .delete-btn {
+  background-color: #e74c3c;
+  color: #ffffff;
+}
+
+.lista .delete-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Botão "Salvar" */
+.lista .save-btn {
+  background-color: #f39c12;
+  color: #ffffff;
+}
+
+.lista .save-btn:hover {
+  background-color: #e67e22;
+}
+
+/* Botão "Cancelar" */
+.lista .cancel-btn {
+  background-color: #95a5a6;
+  color: #ffffff;
+}
+
+.lista .cancel-btn:hover {
+  background-color: #7f8c8d;
 }
