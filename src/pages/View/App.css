@@ -75,10 +75,9 @@ body {
 
 .lista-container {
   overflow-y: auto;/* Adiciona rolagem se necessário */
+   max-width: 90%; /* Define uma largura máxima */
 
-  margin: 0 auto; /* Centraliza o container */
-  max-width: 90%; /* Define uma largura máxima */
-  padding: 5px; /* Ajuste adicional no container */
+ 
   
 }
 
@@ -103,11 +102,11 @@ body {
 }
 
 .prepapedido {
-  font-size: 50px;
+  font-size: 45px;
   /* Tamanho do título */
   font-weight: bold;
   /* Negrito */
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   /* Espaçamento abaixo do título */
   text-align: left;
   /* Alinha à esquerda */
