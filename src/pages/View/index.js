@@ -10,10 +10,10 @@ import "slick-carousel/slick/slick-theme.css";
 
 function View() {
   const [saveValue, setSaveValue] = useState([]);
-  const [removedName, setRemovedName] = useState(""); // Último nome removido
+  const [removedName, setRemovedName] = useState(""); 
   const [showAnimation, setShowAnimation] = useState(false);
   const [timerWidth, setTimerWidth] = useState(100);
-  const [recentNames, setRecentNames] = useState([]); // Para armazenar os últimos 5 nomes chamados
+  const [recentNames, setRecentNames] = useState([]); 
 
   const settings = {
     dots: true,
@@ -25,7 +25,7 @@ function View() {
     autoplay: true,
   };
 
-  // Função para atualizar a lista de clientes ao verificar mudanças no localStorage
+  
   useEffect(() => {
     const updateList = () => {
       const savedData = JSON.parse(localStorage.getItem("cliente")) || [];
@@ -33,9 +33,9 @@ function View() {
 
       const removedData = localStorage.getItem("removedName");
       if (removedData) {
-        setRemovedName(removedData); // Atualiza o nome removido
+        setRemovedName(removedData); 
 
-        // Atualiza a lista de 5 nomes, garantindo que o nome mais recente não se repita
+        
         setRecentNames((prevNames) => {
           const updatedNames = [removedData, ...prevNames.filter(name => name !== removedData)].slice(0, 5);
           return updatedNames;
@@ -47,20 +47,20 @@ function View() {
         setShowAnimation(true);
         localStorage.removeItem("triggerAnimation");
 
-        // Iniciar barra de tempo e desabilitar remoção
+       
         localStorage.setItem("disableRemove", "true");
         let width = 100;
         const interval = setInterval(() => {
           width -= 1;
           setTimerWidth(width);
-        }, 100); // Reduzir a cada 100ms
+        }, 100); 
 
         setTimeout(() => {
           clearInterval(interval);
           setShowAnimation(false);
-          localStorage.setItem("disableRemove", "false"); // Habilitar remoção
-          setTimerWidth(100); // Resetar barra
-        }, 10000); // Exibir por 10 segundos
+          localStorage.setItem("disableRemove", "false"); 
+          setTimerWidth(100); 
+        }, 10000); 
       }
     };
 
@@ -106,7 +106,7 @@ function View() {
           {/* Lista dos últimos 5 nomes chamados */}
           <ul className="nome">
       {recentNames.length === 0 ? (
-        <li>Sem nomes</li>  // Caso não haja nomes, exibe uma mensagem
+        <li>Sem nomes</li> 
       ) : (
         recentNames.map((name, index) => (
           <li key={index}>{name}</li>

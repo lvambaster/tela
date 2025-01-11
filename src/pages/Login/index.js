@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Ícones de olho
+import { FaEye, FaEyeSlash } from "react-icons/fa"; 
 import "./index.css";
 import logo from "./logo.png";
 
@@ -8,11 +8,11 @@ function Log() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // Estado para alternar visibilidade da senha
+  const [showPassword, setShowPassword] = useState(false); 
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    if (username === "rede" && password === "pescados2024@") {
+    if (username === "admin" && password === "admin") {
       setError("");
       window.open("/view", "_blank");
       navigate("/operator");
@@ -39,14 +39,14 @@ function Log() {
           <label>Senha:</label>
           <div className="password-input-container">
             <input
-              type={showPassword ? "text" : "password"} // Alterna entre texto e senha
+              type={showPassword ? "text" : "password"} 
               placeholder="Digite sua Senha"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <div
               className="password-toggle"
-              onClick={() => setShowPassword(!showPassword)} // Alterna o estado da senha
+              onClick={() => setShowPassword(!showPassword)} 
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </div>

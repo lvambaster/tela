@@ -6,15 +6,15 @@ function Operator() {
   const [saveValue, setSaveValue] = useState([]);
   const [isEditing, setIsEditing] = useState(null);
   const [editValue, setEditValue] = useState("");
-  const [isTimerActive, setIsTimerActive] = useState(false); // Estado do temporizador
+  const [isTimerActive, setIsTimerActive] = useState(false); 
+  
 
-  // Carregar dados do localStorage ao montar o componente
   useEffect(() => {
     const savedData = JSON.parse(localStorage.getItem("cliente")) || [];
     setSaveValue(savedData);
   }, []);
 
-  // Adicionar novo cliente ao estado e localStorage
+ 
   const handleLocalStorage = () => {
     if (lançar.trim() !== "") {
       const newEntry = { id: Date.now(), name: lançar };
@@ -31,18 +31,17 @@ function Operator() {
     }
   };
 
-  // Função para iniciar o temporizador
+  
   const startTimer = () => {
     setIsTimerActive(true);
     setTimeout(() => {
       setIsTimerActive(false);
-    }, 5000); // O temporizador vai rodar por 5 segundos
+    }, 5000); 
   };
 
-  // Remover cliente (botão "OK!")
   const handleRemove = (id) => {
     if (isTimerActive) {
-      return; // Não faz nada se o temporizador estiver ativo
+      return; 
     }
     const updatedValue = saveValue.filter((item) => item.id !== id);
     setSaveValue(updatedValue);
@@ -54,23 +53,23 @@ function Operator() {
       localStorage.setItem("triggerAnimation", "true");
     }
 
-    startTimer(); // Inicia o temporizador após a remoção
+    startTimer(); 
   };
 
-  // Exclusão completa do cliente
+  
   const handleDelete = (id) => {
     const updatedValue = saveValue.filter((item) => item.id !== id);
     setSaveValue(updatedValue);
     localStorage.setItem("cliente", JSON.stringify(updatedValue));
   };
 
-  // Iniciar a edição do nome
+  
   const handleEdit = (id, currentName) => {
     setIsEditing(id);
     setEditValue(currentName);
   };
 
-  // Salvar a edição do nome
+  
   const handleSaveEdit = (id) => {
     const updatedValue = saveValue.map((item) => {
       if (item.id === id) {
@@ -130,9 +129,9 @@ function Operator() {
                     <>
                       {cliente.name}
                       <button
-                        className={`ok-btn ${isTimerActive ? "disabled" : ""}`} // Aplique a classe condicional corretamente
+                        className={`ok-btn ${isTimerActive ? "disabled" : ""}`} 
                         onClick={() => handleRemove(cliente.id)}
-                        disabled={isTimerActive} // Desabilita o botão enquanto o temporizador está ativo
+                        disabled={isTimerActive} 
                       >
                         OK!
                       </button>
